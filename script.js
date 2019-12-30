@@ -48,9 +48,8 @@ function displayResults(responseObj){
     const imageArray = responseObj.message;
     let imageArrayHtml = '';
 
-    if (imageArray.isArray) {
+    if (Array.isArray(imageArray)) {
         for (let i = 0; i < imageArray.length; i++) {
-            console.log(`${imageArray[i]}`);
             imageArrayHtml += `<img src=${imageArray[i]} width=200px>`
         };
     } else {
