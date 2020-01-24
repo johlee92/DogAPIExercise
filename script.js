@@ -38,7 +38,7 @@ function getRandomBreedImages(breed){
             displayResults(responseJson);
         })
         .catch(err => {
-            $('#js-error-message').text(`Something went wrong: ${err.message}`);
+            $('#js-error-message').text(`Something went wrong: breed not found`);
     });
 }
 
@@ -62,11 +62,17 @@ function displayResults(responseObj){
 function formRandomSubmit() {
     $('#js-form-random').on('submit', function(event) {
         event.preventDefault();
-        const searchNumber = $('#search-number').val();
+        const searchNumber = $('#searchNumber').val();
         const numPics = parseInt(searchNumber, 10);
         $('.search-results').empty();
+        $('#js-error-message').empty();
         //should add a error catch in case user enters something not within range
-        getRandomDogImages(numPics);
+        if (!searchNumber || searchNumber < 1 || searchNumber > 50) {
+            //  throw new Error("Number needs to be an integer between 1 and 50");
+            $('#js-error-message').text(`Number needs to be an integer between 1 and 50`);
+        } else {
+            getRandomDogImages(numPics);
+        }
     });
 }
 
@@ -75,7 +81,12 @@ function formBreedSubmit() {
         event.preventDefault();
         const searchBreed = $('#search-breed').val();
         $('.search-results').empty();
-        getRandomBreedImages(searchBreed);
+        $('#js-error-message').empty();
+        if (!searchBreed) {
+            $('#js-error-message').text(`Please submit the desired breed`);
+        } else  {
+            getRandomBreedImages(searchBreed);
+        }
     });
 }
 
